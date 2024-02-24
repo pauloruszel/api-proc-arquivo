@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "processamento_erro")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

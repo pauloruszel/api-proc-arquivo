@@ -33,4 +33,5 @@ public class ArquivoHelper {
     public static String criarNomeArquivoAleatorio() {
         return UUID.randomUUID().toString();
     }
+
 }
