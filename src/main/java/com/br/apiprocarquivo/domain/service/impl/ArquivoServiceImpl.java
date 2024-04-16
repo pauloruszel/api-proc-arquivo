@@ -56,19 +56,21 @@ public class ArquivoServiceImpl implements ArquivoService {
         int totalRegistros = 0;
         int linhasProcessadasComSucesso = 0;
 
-        for (Row row : sheet) {
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            Row row = sheet.getRow(i);
+
             if (++totalRegistros >= limiteDeRegistros) {
                 log.info("Limite de registros para processamento alcançado: {} registros.", limiteDeRegistros);
                 break;
             }
 
-            if (processamentoService.processarLinha(row, processamento)) {
+            if (processamentoService.processarLinha(row, processamento, i)) {
                 linhasProcessadasComSucesso++;
             }
         }
 
-        processamentoService.atualizarStatusProcessamento(linhasProcessadasComSucesso, sheet, processamento);
-        log.info("Total de registros processados: {}/{}", linhasProcessadasComSucesso, totalRegistros);
+        processamentoService.atualizarStatusProcessamento(linhasProcessadasComSucesso +1, sheet, processamento);
+        log.info("Total de registros processados: {}/{}", linhasProcessadasComSucesso +1, totalRegistros);
     }
 
 }

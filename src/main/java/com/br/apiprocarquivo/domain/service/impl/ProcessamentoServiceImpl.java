@@ -28,7 +28,13 @@ public class ProcessamentoServiceImpl implements ProcessamentoService {
     private final ProcessamentoErroRepository processamentoErroRepository;
 
     @Override
-    public boolean processarLinha(final Row row, final Processamento processamento) {
+    public boolean processarLinha(final Row row, final Processamento processamento, final int posicaoLinha) {
+        if (row == null) {
+            log.warn("Linha nula encontrada na posição {}.", posicaoLinha);
+            salvarErroDeProcessamento(processamento, "Erro de validação ou linha vazia na linha " + posicaoLinha);
+            return false;
+        }
+
         if (!isRowComplete(row)) {
             log.error("Dados incompletos ou linha vazia detectada na linha {}.", row.getRowNum());
             salvarErroDeProcessamento(processamento, "Erro de validação ou linha vazia na linha " + row.getRowNum());
@@ -39,10 +45,11 @@ public class ProcessamentoServiceImpl implements ProcessamentoService {
 
     @Override
     public void atualizarStatusProcessamento(final int linhasProcessadasComSucesso, final Sheet sheet, Processamento processamento) {
-        final var status = linhasProcessadasComSucesso == sheet.getPhysicalNumberOfRows() - 1 ? CONCLUIDO : PARCIAL;
+        final var resultadoSheet = sheet.getPhysicalNumberOfRows() -1;
+        final var status = linhasProcessadasComSucesso == resultadoSheet ? CONCLUIDO : PARCIAL;
         processamento.setStatus(status);
         processamento.setQuantidadeProcessada(linhasProcessadasComSucesso);
-        processamento.setTotalRegistros(sheet.getPhysicalNumberOfRows() - 1);
+        processamento.setTotalRegistros(resultadoSheet);
         processamentoRepository.save(processamento);
 
         log.info("o processamento foi atualizado com o nome {}, data {} e status {}",
