@@ -1,4 +1,4 @@
-package com.br.apiprocarquivo.entity;
+package com.br.apiprocarquivo.domain.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

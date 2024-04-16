@@ -1,4 +1,4 @@
-package com.br.apiprocarquivo.entity;
+package com.br.apiprocarquivo.domain.model;
 
 import com.br.apiprocarquivo.domain.enums.ProcessamentoErroStatus;
 import jakarta.persistence.*;
@@ -28,7 +28,6 @@ public class ProcessamentoErro {
 
     private LocalDateTime data;
 
-    @Lob
     @Column(name = "payload")
     private String payload;
 }
