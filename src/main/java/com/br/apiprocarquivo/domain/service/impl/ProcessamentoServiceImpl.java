@@ -40,11 +40,9 @@ public class ProcessamentoServiceImpl implements ProcessamentoService {
     @Override
     public void atualizarStatusProcessamento(final int linhasProcessadasComSucesso, final Sheet sheet, Processamento processamento) {
         final var status = linhasProcessadasComSucesso == sheet.getPhysicalNumberOfRows() - 1 ? CONCLUIDO : PARCIAL;
-        processamento = Processamento.builder()
-                .status(status)
-                .quantidadeProcessada(linhasProcessadasComSucesso)
-                .totalRegistros(sheet.getPhysicalNumberOfRows() - 1)
-                .build();
+        processamento.setStatus(status);
+        processamento.setQuantidadeProcessada(linhasProcessadasComSucesso);
+        processamento.setTotalRegistros(sheet.getPhysicalNumberOfRows() - 1);
         processamentoRepository.save(processamento);
 
         log.info("o processamento foi atualizado com o nome {}, data {} e status {}",
