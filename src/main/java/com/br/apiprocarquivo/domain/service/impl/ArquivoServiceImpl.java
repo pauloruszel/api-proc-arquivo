@@ -52,7 +52,7 @@ public class ArquivoServiceImpl implements ArquivoService {
         return processamentoRepository.save(processamento);
     }
 
-    private void processarSheet(Sheet sheet, Processamento processamento) {
+    private void processarSheet(final Sheet sheet, final Processamento processamento) {
         int totalRegistros = 0;
         int linhasProcessadasComSucesso = 0;
 
