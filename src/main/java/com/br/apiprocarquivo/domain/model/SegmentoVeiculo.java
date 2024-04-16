@@ -5,20 +5,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
 
-@Entity
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Planos {
+@Entity(name = "segmento_veiculo")
+public class SegmentoVeiculo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_segmento_veiculo")
+    private Long idSegmentoVeiculo;
 
-    @Column(name = "nome_plano")
-    private String nomePlano;
+    private String nome;
 
-    private LocalDateTime data;
+    private boolean ativo;
 }

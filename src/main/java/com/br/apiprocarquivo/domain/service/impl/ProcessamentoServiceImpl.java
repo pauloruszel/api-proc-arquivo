@@ -6,6 +6,7 @@ import com.br.apiprocarquivo.domain.model.ProcessamentoErro;
 import com.br.apiprocarquivo.domain.repository.ProcessamentoErroRepository;
 import com.br.apiprocarquivo.domain.repository.ProcessamentoRepository;
 import com.br.apiprocarquivo.domain.service.ProcessamentoService;
+import com.br.apiprocarquivo.infrastructure.helper.ArquivoHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;

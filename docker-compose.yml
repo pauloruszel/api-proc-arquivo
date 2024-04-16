@@ -15,11 +15,6 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres@123
     depends_on:
       - postgres
-    logging:
-      driver: json-file
-      options:
-        max-size: "10m"
-        max-file: "3"
 
   postgres:
     image: postgres:latest
@@ -31,8 +26,21 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/data/db
-      - ./initdb:/docker-entrypoint-initdb.d/:ro
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  flyway:
+    image: flyway/flyway
+    command: -url=jdbc:postgresql://postgres:5432/processamentoarquivo -schemas=public -user=postgres -password=postgres@123 migrate
+    depends_on:
+        postgres:
+          condition: service_healthy
+    volumes:
+      - ./db/migration:/flyway/sql
 
 volumes:
   postgres_data:

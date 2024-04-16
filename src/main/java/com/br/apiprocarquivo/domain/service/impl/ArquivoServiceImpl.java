@@ -5,6 +5,7 @@ import com.br.apiprocarquivo.domain.model.Processamento;
 import com.br.apiprocarquivo.domain.repository.ProcessamentoRepository;
 import com.br.apiprocarquivo.domain.service.ArquivoService;
 import com.br.apiprocarquivo.domain.service.ProcessamentoService;
+import com.br.apiprocarquivo.infrastructure.helper.ArquivoHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 
+import static com.br.apiprocarquivo.infrastructure.helper.ArquivoHelper.createVeiculoCotacaoModelFromRow;
 import static com.br.apiprocarquivo.infrastructure.helper.ArquivoHelper.criarNomeArquivoAleatorio;
 
 @Slf4j
@@ -67,10 +69,14 @@ public class ArquivoServiceImpl implements ArquivoService {
             if (processamentoService.processarLinha(row, processamento, i)) {
                 linhasProcessadasComSucesso++;
             }
+            final var arquivoCotacao = createVeiculoCotacaoModelFromRow(row);
+            assert arquivoCotacao != null;
+            log.info("Arquivo convertido [{}]", arquivoCotacao.getCotacao());
         }
 
-        processamentoService.atualizarStatusProcessamento(linhasProcessadasComSucesso +1, sheet, processamento);
-        log.info("Total de registros processados: {}/{}", linhasProcessadasComSucesso +1, totalRegistros);
+        processamentoService.atualizarStatusProcessamento(linhasProcessadasComSucesso, sheet, processamento);
+        // Salvar os campos nas tabelas começa aqui
+        log.info("Total de registros processados: {}/{}", linhasProcessadasComSucesso, totalRegistros);
     }
 
 }
