@@ -51,11 +51,3 @@ O projeto é estruturado em pacotes, seguindo o padrão MVC, complementado com r
 
 Para usar a API, envie um arquivo Excel (.xlsx) para o endpoint `/api/v1/arquivos/upload` usando um cliente HTTP, como Postman ou cURL. O arquivo deve seguir o formato esperado pela aplicação para ser processado corretamente.
 
-## Licença
-
-Este projeto é licenciado sob a Licença MIT. Consulte o arquivo LICENSE para detalhes.
-
-## Recursos Adicionais
-
-* Documentação da API: https://es.wiktionary.org/wiki/removido
-* Repositório do projeto: https://es.wiktionary.org/wiki/removido
