@@ -10,17 +10,22 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/processamento
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/processamentoarquivo
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres@123
     depends_on:
       - postgres
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   postgres:
     image: postgres:latest
     restart: always
     environment:
-      POSTGRES_DB: processamento
+      POSTGRES_DB: processamentoarquivo
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres@123
     ports:

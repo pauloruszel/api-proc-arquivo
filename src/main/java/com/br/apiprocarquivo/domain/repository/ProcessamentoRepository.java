@@ -1,7 +1,7 @@
-package com.br.apiprocarquivo.repository;
+package com.br.apiprocarquivo.domain.repository;
 
+import com.br.apiprocarquivo.domain.model.Processamento;
 import com.br.apiprocarquivo.domain.enums.ProcessamentoStatus;
-import com.br.apiprocarquivo.entity.Processamento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface ProcessamentoRepository extends JpaRepository<Processamento, Long> {
 
-    List<Processamento> findAllByStatus(String status);
+    List<Processamento> findAllByStatus(ProcessamentoStatus status);
 
     @Query("SELECT p FROM Processamento p WHERE p.status IN (:status)")
     List<Processamento> findAllByStatusIn(@Param("status") List<ProcessamentoStatus> status);
