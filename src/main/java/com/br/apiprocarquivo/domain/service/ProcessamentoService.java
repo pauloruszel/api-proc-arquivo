@@ -6,7 +6,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 public interface ProcessamentoService {
 
-    boolean processarLinha(Row row, Processamento processamento);
+    boolean processarLinha(Row row, Processamento processamento, int posicaoLinha);
 
     void atualizarStatusProcessamento(int linhasProcessadasComSucesso, Sheet sheet, Processamento processamento);
 }
