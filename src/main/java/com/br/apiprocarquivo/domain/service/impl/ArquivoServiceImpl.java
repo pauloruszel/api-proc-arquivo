@@ -1,11 +1,10 @@
 package com.br.apiprocarquivo.domain.service.impl;
 
+import com.br.apiprocarquivo.api.model.VeiculoCotacaoModel;
 import com.br.apiprocarquivo.domain.enums.ProcessamentoStatus;
-import com.br.apiprocarquivo.domain.model.Processamento;
+import com.br.apiprocarquivo.domain.model.*;
 import com.br.apiprocarquivo.domain.repository.ProcessamentoRepository;
-import com.br.apiprocarquivo.domain.service.ArquivoService;
-import com.br.apiprocarquivo.domain.service.ProcessamentoService;
-import com.br.apiprocarquivo.infrastructure.helper.ArquivoHelper;
+import com.br.apiprocarquivo.domain.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
@@ -29,6 +28,12 @@ public class ArquivoServiceImpl implements ArquivoService {
 
     private final ProcessamentoService processamentoService;
     private final ProcessamentoRepository processamentoRepository;
+    private final VeiculoCotacaoService veiculoCotacaoService;
+    private final SegmentoVeiculoService segmentoVeiculoService;
+    private final ModeloVeiculoService modeloVeiculoService;
+    private final TipoPessoaService tipoPessoaService;
+    private final VeiculoService veiculoService;
+    private final CotacaoService cotacaoService;
 
     @Value("${processamento.limite.registros}")
     private int limiteDeRegistros;
@@ -66,17 +71,28 @@ public class ArquivoServiceImpl implements ArquivoService {
                 break;
             }
 
+            final var arquivoCotacao = createVeiculoCotacaoModelFromRow(row);
+            if (arquivoCotacao == null) continue;
+
             if (processamentoService.processarLinha(row, processamento, i)) {
                 linhasProcessadasComSucesso++;
             }
-            final var arquivoCotacao = createVeiculoCotacaoModelFromRow(row);
-            assert arquivoCotacao != null;
-            log.info("Arquivo convertido [{}]", arquivoCotacao.getCotacao());
+
+            salvarDadosSeNecessario(arquivoCotacao);
         }
 
         processamentoService.atualizarStatusProcessamento(linhasProcessadasComSucesso, sheet, processamento);
-        // Salvar os campos nas tabelas começa aqui
         log.info("Total de registros processados: {}/{}", linhasProcessadasComSucesso, totalRegistros);
+    }
+
+    private void salvarDadosSeNecessario(final VeiculoCotacaoModel veiculoCotacaoModel) {
+        final var segmento = segmentoVeiculoService.salvarSeNaoExiste(veiculoCotacaoModel);
+        final var modelo = modeloVeiculoService.salvarSeNaoExiste(veiculoCotacaoModel);
+        final var tipoPessoa = tipoPessoaService.salvarSeNaoExiste(veiculoCotacaoModel);
+        final var veiculo = veiculoService.salvarSeNaoExiste(veiculoCotacaoModel, segmento, modelo);
+        final var cotacao = cotacaoService.salvarSeNaoExiste(veiculoCotacaoModel);
+
+        veiculoCotacaoService.salvarSeNaoExiste(veiculoCotacaoModel, veiculo, cotacao, tipoPessoa);
     }
 
 }
