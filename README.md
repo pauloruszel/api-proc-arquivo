@@ -10,7 +10,7 @@ Esta API Spring Boot é projetada para o processamento de arquivos Excel (.xlsx)
 * **Processamento de Dados:** Analisa os dados do arquivo Excel e processa informações de planos de carro.
 * **Gerenciamento de Processamentos e Erros:** Armazena informações sobre os processamentos realizados e eventuais erros encontrados durante o processamento dos dados.
 
-## Tecnologias Utilizadas
+## Tecnologias Utilizadasdd
 
 * Spring Boot
 * Lombok

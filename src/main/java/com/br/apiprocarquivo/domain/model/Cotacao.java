@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 
@@ -14,8 +16,11 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Cotacao {
+public class Cotacao implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 5082188176667948724L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cotacao")

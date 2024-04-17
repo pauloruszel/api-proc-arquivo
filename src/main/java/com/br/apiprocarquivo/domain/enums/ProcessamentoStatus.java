@@ -13,13 +13,4 @@ public enum ProcessamentoStatus {
 
     private final String status;
 
-    public static ProcessamentoStatus fromStatus(String status) {
-        for (ProcessamentoStatus ps : values()) {
-            if (ps.getStatus().equalsIgnoreCase(status)) {
-                return ps;
-            }
-        }
-        throw new IllegalArgumentException("Status inválido: " + status);
-    }
-
 }

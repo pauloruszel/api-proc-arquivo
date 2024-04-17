@@ -1,6 +1,7 @@
 package com.br.apiprocarquivo.api.controller;
 
 import com.br.apiprocarquivo.domain.service.ArquivoService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,26 +18,23 @@ import static org.springframework.http.ResponseEntity.status;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1")
+@RequiredArgsConstructor
 public class ProcessamentoController {
 
     private final ArquivoService arquivoService;
 
-    public ProcessamentoController(ArquivoService arquivoService) {
-        this.arquivoService = arquivoService;
-    }
-
     @PostMapping(value = "/arquivos/upload", consumes = "multipart/form-data")
-    public ResponseEntity<String> uploadArquivo(@RequestParam("arquivo") MultipartFile arquivo) {
+    public ResponseEntity<String> uploadArquivo(@RequestParam("arquivo") final MultipartFile arquivo) {
 
         try {
             if (arquivo.isEmpty()) {
                 log.warn("arquivo vazio ou nao enviado");
-                return status(BAD_REQUEST).body("arquivo não enviado.");
+                return status(BAD_REQUEST).body("arquivo nao enviado.");
             }
 
             if (!isArquivoExcelValido(arquivo)) {
-                log.warn("formato de arquivo não suportado.");
-                return status(BAD_REQUEST).body("formato de arquivo não suportado. apenas .xlsx é permitido.");
+                log.warn("formato de arquivo nao suportado.");
+                return status(BAD_REQUEST).body("formato de arquivo nao suportado apenas xlsx e permitido.");
             }
 
             log.info("iniciando o processamento do arquivo {}", arquivo.getOriginalFilename());
@@ -46,7 +44,7 @@ public class ProcessamentoController {
             return ResponseEntity.ok("arquivo recebido e processado");
         } catch (Exception e) {
             log.error("erro ao processar arquivo {}: {}", arquivo.getOriginalFilename(), e, e);
-            return status(INTERNAL_SERVER_ERROR).body("Erro ao processar arquivo: " + e.getMessage());
+            return status(INTERNAL_SERVER_ERROR).body("erro ao processar arquivo: " + e.getMessage());
         }
     }
 

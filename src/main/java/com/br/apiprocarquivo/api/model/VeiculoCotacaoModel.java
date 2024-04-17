@@ -2,14 +2,17 @@ package com.br.apiprocarquivo.api.model;
 
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.math.BigDecimal;
-
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class VeiculoCotacaoModel {
+public class VeiculoCotacaoModel implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -5800762519104879241L;
 
     private String codigoCliente;
     private String cotacao;

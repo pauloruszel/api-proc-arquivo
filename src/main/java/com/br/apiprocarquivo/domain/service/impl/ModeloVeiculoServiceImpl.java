@@ -16,7 +16,7 @@ public class ModeloVeiculoServiceImpl implements ModeloVeiculoService {
     private final ModeloVeiculoRepository modeloVeiculoRepository;
 
     @Override
-    public ModeloVeiculo salvarSeNaoExiste(VeiculoCotacaoModel veiculoCotacaoModel) {
+    public ModeloVeiculo salvarSeNaoExiste(final VeiculoCotacaoModel veiculoCotacaoModel) {
         return modeloVeiculoRepository.findByNomeAndAndAtivo(veiculoCotacaoModel.getModelo(), true)
                 .orElseGet(() -> {
                     final var modeloVeiculo = ModeloVeiculo.builder()

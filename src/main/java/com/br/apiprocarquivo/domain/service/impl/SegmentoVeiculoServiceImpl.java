@@ -16,7 +16,7 @@ public class SegmentoVeiculoServiceImpl implements SegmentoVeiculoService {
     private final SegmentoVeiculoRepository segmentoVeiculoRepository;
 
     @Override
-    public SegmentoVeiculo salvarSeNaoExiste(VeiculoCotacaoModel veiculoCotacaoModel) {
+    public SegmentoVeiculo salvarSeNaoExiste(final VeiculoCotacaoModel veiculoCotacaoModel) {
         return segmentoVeiculoRepository.findByNomeAndAndAtivo(veiculoCotacaoModel.getSegmento(), true)
                 .orElseGet(() -> {
                     final var segmentoVeiculo = SegmentoVeiculo.builder()
