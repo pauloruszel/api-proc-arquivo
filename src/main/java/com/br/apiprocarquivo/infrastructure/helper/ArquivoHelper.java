@@ -31,24 +31,12 @@ public class ArquivoHelper {
                 .mapToObj(i -> row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK))
                 .allMatch(cell -> {
                     int columnIndex = cell.getColumnIndex();
-                    switch (columnIndex) {
-                        case 8, 9, 14, 15 -> {
-                            // Campos numéricos que devem ser long
-                            return getCellValueAsLong(cell) != -1L;
-                        }
-                        case 13, 18 -> {
-                            // Campos numéricos que devem ser inteiros
-                            return getCellValueAsInteger(cell) != -1;
-                        }
-                        case 16, 17, 19 -> {
-                            // Campos decimais
-                            return getCellValueAsBigDecimal(cell).compareTo(BigDecimal.ZERO) != 0;
-                        }
-                        default -> {
-                            // Campos de texto
-                            return !getCellValueAsString(cell).isEmpty();
-                        }
-                    }
+                    return switch (columnIndex) {
+                        case 8, 9, 14, 15 -> getCellValueAsLong(cell) != -1L; // Campos numéricos que devem ser long
+                        case 13, 18 -> getCellValueAsInteger(cell) != -1;     // Campos numéricos que devem ser inteiros
+                        case 16, 17, 19 -> getCellValueAsBigDecimal(cell).compareTo(BigDecimal.ZERO) != 0; // Campos decimais
+                        default -> !getCellValueAsString(cell).isEmpty();     // Campos de texto
+                    };
                 });
     }
 
@@ -86,7 +74,7 @@ public class ArquivoHelper {
         return UUID.randomUUID().toString();
     }
 
-    private static String getCellValueAsString(Cell cell) {
+    private static String getCellValueAsString(final Cell cell) {
         return switch (cell.getCellType()) {
             case STRING -> cell.getStringCellValue().trim();
             case NUMERIC -> NumberToTextConverter.toText(cell.getNumericCellValue());
@@ -94,7 +82,7 @@ public class ArquivoHelper {
         };
     }
 
-    private static BigDecimal getCellValueAsBigDecimal(Cell cell) {
+    private static BigDecimal getCellValueAsBigDecimal(final Cell cell) {
         if (cell.getCellType() == CellType.NUMERIC) {
             return BigDecimal.valueOf(cell.getNumericCellValue());
         } else {
@@ -106,7 +94,7 @@ public class ArquivoHelper {
         }
     }
 
-    private static Long getCellValueAsLong(Cell cell) {
+    private static Long getCellValueAsLong(final Cell cell) {
         try {
             if (cell.getCellType() == CellType.NUMERIC) {
                 return (long) cell.getNumericCellValue();
@@ -118,7 +106,7 @@ public class ArquivoHelper {
         }
     }
 
-    private static Integer getCellValueAsInteger(Cell cell) {
+    private static Integer getCellValueAsInteger(final Cell cell) {
         try {
             if (cell.getCellType() == CellType.NUMERIC) {
                 return (int) cell.getNumericCellValue();
