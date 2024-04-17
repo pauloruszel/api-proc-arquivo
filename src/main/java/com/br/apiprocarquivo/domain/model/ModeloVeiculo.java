@@ -26,9 +26,9 @@ public class ModeloVeiculo {
     private String transmissao;
 
     @Column(name = "ano_modelo")
-    private String anoModelo;
+    private Long anoModelo;
 
     @Column(name = "ano_fabricacao")
-    private String anoFabricacao;
+    private Long anoFabricacao;
 
 }
