@@ -6,14 +6,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity(name = "veiculo_cotacao")
-public class VeiculoCotacao {
+@Entity
+public class VeiculoCotacao implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 6082089896878589608L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_veiculo_cotacao")

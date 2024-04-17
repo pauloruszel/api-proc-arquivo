@@ -16,7 +16,7 @@ public class TipoPessoaServiceImpl implements TipoPessoaService {
     private final TipoPessoaRepository tipoPessoaRepository;
 
     @Override
-    public TipoPessoa salvarSeNaoExiste(VeiculoCotacaoModel veiculoCotacaoModel) {
+    public TipoPessoa salvarSeNaoExiste(final VeiculoCotacaoModel veiculoCotacaoModel) {
         return tipoPessoaRepository.findByNomeAndAtivo(veiculoCotacaoModel.getCodigoCliente(), true)
                 .orElseGet(() -> {
                     final var tipoPessoa = TipoPessoa.builder()

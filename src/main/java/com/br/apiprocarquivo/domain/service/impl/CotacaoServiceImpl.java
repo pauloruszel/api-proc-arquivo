@@ -16,7 +16,7 @@ public class CotacaoServiceImpl implements CotacaoService {
     private final CotacaoRepository cotacaoRepository;
 
     @Override
-    public Cotacao salvarSeNaoExiste(VeiculoCotacaoModel model) {
+    public Cotacao salvarSeNaoExiste(final VeiculoCotacaoModel model) {
         return cotacaoRepository.findByCodigoCotacaoAndAtivo(model.getCotacao(), true)
                 .orElseGet(() -> {
                     final var cotacao = Cotacao.builder()

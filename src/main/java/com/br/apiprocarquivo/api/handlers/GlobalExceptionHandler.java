@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception e) {
-        log.error("Erro interno: {}", e.toString(), e);
+        log.error("erro interno: {}", e.toString(), e);
         return ResponseEntity.status(INTERNAL_SERVER_ERROR).body("Erro interno do servidor. Por favor, entre em contato com o suporte.");
     }
 
