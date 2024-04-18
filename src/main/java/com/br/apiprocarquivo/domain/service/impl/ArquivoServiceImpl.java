@@ -72,11 +72,12 @@ public class ArquivoServiceImpl implements ArquivoService {
                 return;
             }
 
+            if (processamentoService.processarLinha(row, processamento, i)) {
+                linhasProcessadasComSucesso++;
+            }
+
             final var arquivoCotacao = createVeiculoCotacaoModelFromRow(row);
             if (arquivoCotacao != null) {
-                if (processamentoService.processarLinha(row, processamento, i)) {
-                    linhasProcessadasComSucesso++;
-                }
                 salvarDadosSeNecessario(arquivoCotacao);
             }
         }

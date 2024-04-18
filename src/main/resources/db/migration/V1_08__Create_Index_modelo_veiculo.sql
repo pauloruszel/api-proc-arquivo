@@ -1,0 +1,1 @@
+CREATE INDEX idx_modelo_veiculo_nome_ativo ON modelo_veiculo(nome, ativo);

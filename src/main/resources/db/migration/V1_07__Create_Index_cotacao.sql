@@ -1,0 +1,1 @@
+CREATE INDEX idx_cotacao_codigo_ativo ON cotacao(codigo_cotacao, ativo);
