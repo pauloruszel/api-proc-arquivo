@@ -1,0 +1,1 @@
+CREATE INDEX idx_veiculo_marca ON veiculo(marca);

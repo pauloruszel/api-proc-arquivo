@@ -1,0 +1,1 @@
+CREATE INDEX idx_processamento_status ON processamento(status);
