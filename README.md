@@ -1,53 +1,49 @@
-# API de Processamento de Arquivos para Planos de Carro
+## 🎯 API de Processamento de arquivos para Cotações e Planos de Carro
 
-## Descrição
+**Esta API foi desenvolvida para facilitar o processamento eficiente de arquivos Excel (.xlsx) que contêm dados sobre cotações e planos de automóveis.**
 
-Esta API Spring Boot é projetada para o processamento de arquivos Excel (.xlsx) relacionados a planos de carro. Ela permite o upload de arquivos, processa os dados contidos e armazena informações sobre planos, processamentos e erros.
+* Upload de Arquivos: Permite aos usuários carregar arquivos Excel diretamente na plataforma.
+* Processamento de Dados: Após o upload, a API processa automaticamente os dados contidos no arquivo. Isso inclui a validação das células e tipos do dados para as cotações de seguros, modelos de carros, segmentos e dados específicos dos veículos.
+* Armazenamento de Informações: Todos os dados processados são armazenados em um banco PostgresSQL. Isso inclui informações sobre modelos, segmentos, e detalhes específicos de cada veículo.
+* Gerenciamento de Erros: A API permite salvar os erros em uma tabela especifica para cada linha, caso haja ou falhas durante o processamento dos arquivos. Isso garante que qualquer problema seja identificado e tratado.
+      
+## ✔️ Tecnologias e bibliotecas usadas
+   - `Java 21`
+   - `Spring Boot 3.2.4`
+   - `REST API`
+   - `PostgreSQL`
+   - `H2`
+   - `Flyway`
+   - `Lombok`
+   - `Apache POI`
 
-## Funcionalidades
+## 🚀 Como usar
+## Clone o repositório:
 
-* **Upload de Arquivos Excel:** Permite o upload de arquivos Excel para processamento de dados de planos de carro.
-* **Processamento de Dados:** Analisa os dados do arquivo Excel e processa informações de planos de carro.
-* **Gerenciamento de Processamentos e Erros:** Armazena informações sobre os processamentos realizados e eventuais erros encontrados durante o processamento dos dados.
+```bash
+git clone https://github.com/pauloruszel/api-proc-arquivo.git
+```
 
-## Tecnologias Utilizadasdd
+## 📁 Entre na pasta do projeto:
 
-* Spring Boot
-* Lombok
-* Apache POI para leitura de arquivos Excel
-* JPA / Hibernate para persistência de dados
-* Banco de dados relacional (configuração dependente do ambiente)
+```bash
+cd api-proc-arquivo
+```
 
-## Estrutura do Projeto
+  
+## 🛠️ Build:
+   ```bash
+    cd api-proc-arquivo
+    mvn clean install
+   ```
 
-O projeto é estruturado em pacotes, seguindo o padrão MVC, complementado com repositórios para interação com o banco de dados e entidades que representam as tabelas do banco.
+## 🐳 Execute o docker-compose:
+```bash
+docker-compose up --build
+```
 
-## Principais Pacotes
+## ✨ URL's importantes:
 
-* **controller:** Contém ProcessamentoController para lidar com as requisições HTTP.
-* **service:** Contém ArquivoService para lógica de negócio do processamento de arquivos.
-* **repository:** Interfaces JPA para interação com o banco de dados.
-* **entity:** Classes que representam as entidades do banco de dados.
-* **helper:** Utilitários, como validações de arquivo e geração de nomes aleatórios.
+PostgresSQL:
 
-## Entidades
-
-* **Processamento:** Representa um processamento de arquivo, incluindo status e quantidade de registros processados.
-* **ProcessamentoErro:** Registra erros ocorridos durante o processamento de um arquivo.
-* **Planos:** Dados dos planos processados a partir dos arquivos.
-
-## Configuração e Execução
-
-**Configuração do Ambiente:**
-
-* Certifique-se de que o Java e o Maven estão instalados e configurados.
-* Configure as propriedades do banco de dados no application.properties.
-
-**Execução:**
-
-* Execute o projeto com o Maven, usando `mvn spring-boot:run`.
-
-## Uso
-
-Para usar a API, envie um arquivo Excel (.xlsx) para o endpoint `/api/v1/arquivos/upload` usando um cliente HTTP, como Postman ou cURL. O arquivo deve seguir o formato esperado pela aplicação para ser processado corretamente.
-
+URL: `jdbc:postgresql://postgres:5432/processamentoarquivo`
