@@ -1,0 +1,1 @@
+CREATE INDEX idx_tipo_pessoa_nome_ativo ON tipo_pessoa(nome, ativo);
