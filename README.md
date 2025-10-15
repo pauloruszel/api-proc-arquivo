@@ -17,6 +17,28 @@
    - `Lombok`
    - `Apache POI`
 
+## ⚙️ Configuração
+
+Antes de executar em ambientes que utilizam PostgreSQL defina as variáveis de ambiente abaixo (nenhuma credencial padrão fica embarcada no `application.properties`):
+
+| Variável | Descrição |
+| --- | --- |
+| `SPRING_DATASOURCE_URL` | URL JDBC para o banco PostgreSQL. |
+| `SPRING_DATASOURCE_USERNAME` | Usuário do banco. |
+| `SPRING_DATASOURCE_PASSWORD` | Senha do banco. |
+| `PROCESSAMENTO_LIMITE_REGISTROS` | (Opcional) Limite máximo de linhas processadas por arquivo. Valor padrão: `500` em produção e `150` no perfil `dev`. |
+
+O limite efetivamente utilizado é registrado em cada linha da tabela `processamento`, facilitando auditorias futuras.
+
+## 🔄 Fluxo de processamento e monitoramento
+
+* O upload passa a ser assíncrono: o endpoint responde rapidamente com HTTP `202 Accepted`, liberando o cliente para outras operações enquanto o processamento ocorre em background.
+* Após o envio, utilize os novos endpoints para acompanhar o andamento:
+  * `GET /api/v1/processamentos/{id}` — retorna status, totais processados e o limite aplicado ao processamento.
+  * `GET /api/v1/processamentos/{id}/erros` — lista as falhas de validação encontradas por linha.
+
+As mensagens de erro seguem um padrão com códigos estáveis, facilitando automações e internacionalização.
+
 ## 🚀 Como usar
 ## Clone o repositório:
 

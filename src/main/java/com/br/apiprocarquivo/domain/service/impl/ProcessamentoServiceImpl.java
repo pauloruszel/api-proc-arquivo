@@ -9,7 +9,6 @@ import com.br.apiprocarquivo.domain.service.ProcessamentoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -47,14 +46,14 @@ public class ProcessamentoServiceImpl implements ProcessamentoService {
     }
 
     @Override
-    public void atualizarStatusProcessamento(final int linhasProcessadasComSucesso, final Sheet sheet, Processamento processamento) {
+    public void atualizarStatusProcessamento(final int linhasProcessadasComSucesso, final int totalRegistrosProcessados,
+                                             final Processamento processamento) {
         log.info("inicio da atualizacao do status processamento para o arquivo {}.", processamento.getNomeArquivo());
 
-        final var resultadoSheet = sheet.getPhysicalNumberOfRows() - 1;
-        final var status = linhasProcessadasComSucesso == resultadoSheet ? CONCLUIDO : PARCIAL;
+        final var status = linhasProcessadasComSucesso == totalRegistrosProcessados ? CONCLUIDO : PARCIAL;
         processamento.setStatus(status);
         processamento.setQuantidadeProcessada(linhasProcessadasComSucesso);
-        processamento.setTotalRegistros(resultadoSheet);
+        processamento.setTotalRegistros(totalRegistrosProcessados);
         processamentoRepository.save(processamento);
 
         log.info("fim da atualizacao do status processamento para o arquivo {} data {} e status {}",
