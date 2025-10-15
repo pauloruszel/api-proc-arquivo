@@ -38,4 +38,7 @@ public class Processamento implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private ProcessamentoStatus status;
+
+    @Column(name = "limite_registros_utilizado")
+    private Integer limiteRegistrosUtilizado;
 }
