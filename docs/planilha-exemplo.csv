@@ -1,0 +1,4 @@
+codigoCliente,cotacao,marca,segmento,modelo,versao,motor,transmissao,anoModelo,anoProducao,fsc,ocn,pack,prazo,km,kmMensal,mensalidade,kmSuperior,pneus,cooparticipacaoAcidente,cidadeCirculacao
+PJ,COT-2025-0001,Toyota,SUV,Corolla Cross,XRE,2.0 Flex,Automática,2024,2023,FSC123,OCN456,Premium,36,30000,1000,1899.90,0.35,4,1500.00,São Paulo
+PF,COT-2025-0002,Volkswagen,Hatch,Polo,Highline,1.0 TSI,Automática,2024,2024,FSC789,OCN111,Conforto,24,24000,1000,1299.00,0.40,4,900.00,Curitiba
+PJ,COT-2025-0003,Chevrolet,Sedan,Onix Plus,Premier,1.0 Turbo,Manual,2023,2023,FSF555,OCN222,Básico,12,12000,1000,899.50,0.25,4,500.00,Belo Horizonte
