@@ -1,46 +1,48 @@
-version: '3.9'
+version: "3.8"
 
 services:
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        JAR_FILE: ./target/api-proc-arquivo-0.0.1-SNAPSHOT.jar
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/processamentoarquivo
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres@123
-    depends_on:
-      - postgres
-
   postgres:
-    image: postgres:latest
-    restart: always
+    image: postgres:15-alpine
+    container_name: api-proc-arquivo-postgres
+    restart: unless-stopped
     environment:
-      POSTGRES_DB: processamentoarquivo
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres@123
+      - POSTGRES_DB=processamentoarquivo
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d processamentoarquivo"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  flyway:
-    image: flyway/flyway
-    command: -url=jdbc:postgresql://postgres:5432/processamentoarquivo -schemas=public -user=postgres -password=postgres@123 migrate
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: api-proc-arquivo:latest
+    container_name: api-proc-arquivo-app
     depends_on:
-        postgres:
-          condition: service_healthy
-    volumes:
-      - ./db/migration:/flyway/sql
+      postgres:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/processamentoarquivo
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      # Opcional: altera o limite de registros processados por execução
+      - PROCESSAMENTO_LIMITE_REGISTROS=500
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
 
 volumes:
-  postgres_data:
+  db_data:
+    driver: local
+
+# Observações:
+# - Antes de executar `docker compose up --build`, gere o JAR localmente:
+#     mvn clean package -DskipTests
+#   O Dockerfile copia o artefato de `target/api-proc-arquivo-0.0.1-SNAPSHOT.jar`.

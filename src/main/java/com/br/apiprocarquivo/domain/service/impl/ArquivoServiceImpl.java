@@ -11,7 +11,7 @@ import com.br.apiprocarquivo.domain.model.Veiculo;
 import com.br.apiprocarquivo.domain.model.VeiculoCotacao;
 import com.br.apiprocarquivo.domain.repository.ProcessamentoRepository;
 import com.br.apiprocarquivo.domain.service.*;
-import com.monitorjbl.xlsx.StreamingReader;
+import com.github.pjfanning.xlsx.StreamingReader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
